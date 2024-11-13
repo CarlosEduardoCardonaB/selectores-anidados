@@ -4,12 +4,29 @@
 
   <form [formGroup]="myForm">
 
+    <!-- region -->
     <div class="row mb-3">
       <div class="col">
         <label class="form-label">Continente:</label>
         <select formControlName="region" class="form-control">
           <option value="">-- Seleccione continente --</option>
+          @for (region of regions; track $index) {
+            <option [value]="region">{{region}}</option>
+          }
+        </select>
+      </div>
+    </div>
 
+
+    <!-- countries -->
+    <div class="row mb-3">
+      <div class="col">
+        <label class="form-label">País:</label>
+        <select formControlName="country" class="form-control">
+          <option value="">-- Seleccione continente --</option>
+          @for (region of regions; track $index) {
+            <option [value]="region">{{region}}</option>
+          }
         </select>
       </div>
     </div>
