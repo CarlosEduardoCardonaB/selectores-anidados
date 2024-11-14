@@ -18,18 +18,40 @@
     </div>
 
 
-    <!-- countries -->
-    <div class="row mb-3">
-      <div class="col">
-        <label class="form-label">País:</label>
-        <select formControlName="country" class="form-control">
-          <option value="">-- Seleccione continente --</option>
-          @for (region of regions; track $index) {
-            <option [value]="region">{{region}}</option>
-          }
-        </select>
+    @if ( countriesByRegion.length > 0 ) {
+      <!-- countries -->
+      <div class="row mb-3">
+        <div class="col">
+          <label class="form-label">País:</label>
+          <select formControlName="country" class="form-control">
+            <option value="">-- Seleccione continente --</option>
+            @for (country of countriesByRegion; track $index) {
+              <option [value]="country.cca3">{{country.name}}</option>
+            }
+          </select>
+        </div>
       </div>
-    </div>
+    }
+
+
+    @if (borders.length > 0) {
+      <!-- countries -->
+      <div class="row mb-3">
+        <div class="col">
+          <label class="form-label">Fronteras:</label>
+          <select formControlName="border" class="form-control">
+            <option value="">-- Seleccione la frontera --</option>
+            @for (border of borders; track $index) {
+              <option [value]="border">{{border}}</option>
+            }
+          </select>
+        </div>
+      </div>
+    }
+
+
+
+
 
   </form>
 

@@ -1,5 +1,5 @@
 export interface smallCountry {
-  name:         Name;
+  name:         string;
   cca3:         string;
   borders?:     string[];
 }
