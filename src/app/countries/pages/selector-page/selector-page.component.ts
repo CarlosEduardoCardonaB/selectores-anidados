@@ -12,7 +12,7 @@ import { filter, switchMap, tap } from 'rxjs';
 export class SelectorPageComponent implements OnInit {
 
   public countriesByRegion: smallCountry[] = [];
-  public borders: string[] = [];
+  public borders: smallCountry[] = [];
 
   public myForm: FormGroup = this.fb.group({
     region: ['', Validators.required],
@@ -60,11 +60,12 @@ export class SelectorPageComponent implements OnInit {
       .pipe(
         tap( () => this.myForm.get('border')!.setValue('') ),
         filter( (value: string) => value.length > 0 ),  //En este punto validamos si no hay alphaCode del país seleccionado. Aqui si se cumple la condición devuelve un true y si no un false. si es un false ahi finaliza la ejecución y no sige al switchMap
-        switchMap( alphaCode => this.countriesService.getCountryByAlphaCode(alphaCode))
+        switchMap( (alphaCode) => this.countriesService.getCountryByAlphaCode(alphaCode)),
+        switchMap( (country) => this.countriesService.getCountryBordersByCode( country.borders!))
       )
       .subscribe( country => {
         //console.log({borders: country.borders});
-        this.borders = country.borders!;
+        this.borders = country;
       })
    }
 

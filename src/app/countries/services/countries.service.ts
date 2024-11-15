@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Country, Region, smallCountry } from '../interfaces/country.interfaces';
-import { map, Observable, of, tap } from 'rxjs';
+import { combineLatest, map, Observable, of, tap } from 'rxjs';
 //Para usar este HttpClient, tenemos que declararlo en los providers del app.module.ts asi "providers: [provideHttpClient()],"
 import { HttpClient } from '@angular/common/http';
 
@@ -51,6 +51,23 @@ export class CountriesService {
             borders: country.borders ?? []
           }))
       )
+
+  }
+
+  getCountryBordersByCode( borders: string[]): Observable<smallCountry[]>{
+    if( !borders || borders.length === 0 ) return of([]);
+
+    const countriesRequest: Observable<smallCountry>[] = []; //En esta variable voy a almacenar en forma de arreglos los paises que me retorne la función getCountryByAlphaCode
+
+    borders.forEach( code => {
+        const request = this.getCountryByAlphaCode( code );
+
+        countriesRequest.push( request );
+    });
+
+      return combineLatest( countriesRequest ); //Esta librería (combineLatest) de rxjs emite solo hasta que todos los observables emitan todos sus valores
+
+
 
   }
 
